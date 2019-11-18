@@ -55,7 +55,7 @@ export class PromService {
   ajout(etudiant: Etudiant) {
     console.log(etudiant);
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
-      return from(this.offlineManager.storeRequest('etudiant/ajout', 'POST', etudiant));
+      return this.offlineManager.storeRequest('etudiant/ajout', 'POST', etudiant);
     } else {
       return new Promise(resolve => {
         let headers = new HttpHeaders();
@@ -73,7 +73,7 @@ export class PromService {
   modification(etudiant: Etudiant) {
     console.log(etudiant);
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
-      return from(this.offlineManager.storeRequest('etudiant/ajout', 'POST', etudiant));
+      return this.offlineManager.storeRequest('etudiant/ajout', 'POST', etudiant);
     } else {
       return new Promise(resolve => {
         let headers = new HttpHeaders();

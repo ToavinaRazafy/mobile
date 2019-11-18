@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Fiche</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="user-photo" padding-top>
+    <ion-avatar>
+      <img src="{{donne.user.image}}">
+    </ion-avatar>
+  </div>
+
+  <ion-list>
+    <ion-item>
+      <ion-icon name="person" slot="start"></ion-icon>
+      <ion-label>
+        <p>Nom et Prénom</p>
+        <h2>{{donne.user.nom}} {{donne.user.prenom}}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="mail" slot="start"></ion-icon>
+      <ion-label>
+        <p>Email</p>
+        <h2>{{donne.user.username}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-button (click)="deconnecter()" expand="block">Deconnexion</ion-button>
+</ion-content>

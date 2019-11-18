@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ajout étudiant</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-button (click)="openCam()">Ouvrir Camera</ion-button>
+        <img src="{{image}}" width="50">
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Nom</ion-label>
+        <ion-input [formControl]="nom" type="text"></ion-input>
+        <small class="text-danger" *ngIf="form.get('nom').touched && form.get('nom').hasError('required')">nom obligatoire</small>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Prénom</ion-label>
+        <ion-input [formControl]="prenom" type="text"></ion-input>
+        <small class="text-danger" *ngIf="form.get('prenom').touched && form.get('prenom').hasError('required')">Prenom obligatoire</small>
+      </ion-item>
+       <ion-item>
+        <ion-label position="floating">Age</ion-label>
+        <ion-input [formControl]="age" type="number"></ion-input>
+        <small class="text-danger" *ngIf="form.get('age').touched && form.get('age').hasError('required')">Age obligatoire</small>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input [formControl]="email" type="text" email></ion-input>
+         <small class="text-danger" *ngIf="form.get('email').touched && form.get('email').hasError('required')">Email obligatoire</small>                              
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Option</ion-label>
+        <ion-select [formControl]="option">
+          <ion-select-option value="Developpement">Developpement</ion-select-option>
+          <ion-select-option value="Web">Web</ion-select-option>
+          <ion-select-option value="Reseaux">Reseaux</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-button type="submit" expand="block" shape="outline" [disabled]="!form.valid && image==''" margin-top>Ajouter</ion-button>
+  </form>
+
+</ion-content>

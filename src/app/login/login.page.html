@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input [formControl]="email" type="text" email></ion-input>
+         <small class="text-danger" *ngIf="signupForm.get('email').touched && signupForm.get('email').hasError('required')">Email obligatoire</small>                              
+        <small class="text-danger" *ngIf="signupForm.get('email').touched && signupForm.get('email').hasError('email')">Email invalide</small>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Mot de passe</ion-label>
+        <ion-input [formControl]="password" type="password"></ion-input>
+        <small class="text-danger" *ngIf="signupForm.get('password').touched && signupForm.get('password').hasError('required')">Mot de passe obligatoire</small>
+      </ion-item>
+    </ion-list>
+
+    <ion-button type="submit" expand="block" shape="outline" margin-top>Se connecter</ion-button>
+  </form>
+
+</ion-content>

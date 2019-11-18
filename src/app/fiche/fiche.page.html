@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Fiche</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="user-photo" padding-top>
+    <ion-avatar>
+      <img src="{{donne.image}}">
+    </ion-avatar>
+  </div>
+
+  <ion-list>
+    <ion-item>
+      <ion-icon name="person" slot="start"></ion-icon>
+      <ion-label>
+        <p>Nom et Prénom</p>
+        <h2>{{donne.nom}} {{donne.prenom}}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Age</p>
+        <h2>{{donne.age}} ans</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="mail" slot="start"></ion-icon>
+      <ion-label>
+        <p>Email</p>
+        <h2>{{donne.email}}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Option</p>
+        <h2>{{donne.option}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

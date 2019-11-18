@@ -42,11 +42,11 @@ export class JwtInterceptor implements HttpInterceptor {
         }).then((res) => {
             res.present();
 
-            res.onDidDismiss().then((dis) => {
+          /**  res.onDidDismiss().then((dis) => {
                 console.log('Loading dismissed!');
-            });
+            });**/
         });
-        this.hideLoader();
+        //this.hideLoader();
     }
 
     hideLoader() {

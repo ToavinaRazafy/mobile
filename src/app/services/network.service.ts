@@ -15,6 +15,7 @@ export class NetworkService {
     this.plt.ready().then(() => {
       this.initializeNetworkEvents();
       let status = this.network.type !== 'none' ? ConnectionStatus.Online : ConnectionStatus.Offline;
+      console.log("Status "+status);
       this.status.next(status);
     });
   }

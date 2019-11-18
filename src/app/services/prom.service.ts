@@ -5,7 +5,8 @@ import { BehaviorSubject, from } from "rxjs";
 import { Storage } from '@ionic/storage';
 import { NetworkService, ConnectionStatus } from "src/app/services/network.service";
 import { OfflineManagerService } from "src/app/services/offline-manager.service";
-
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
 const API_STORAGE_KEY = 'specialkey';
 
 @Injectable({
@@ -17,12 +18,17 @@ export class PromService {
   liste;
   constructor(public http: HttpClient, private networkService: NetworkService, private storage: Storage, private offlineManager: OfflineManagerService) {
   }
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  } 
   getEtudiant() {
-    console.log(this.networkService.getCurrentNetworkStatus());
+     console.log(this.networkService.getCurrentNetworkStatus());
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
       return this.getLocalData('etudiants');
-    }
-    return new Promise(resolve => {
+    }else{
+        return new Promise(resolve => {
       this.http.get('etudiant/findall').subscribe(data => {
         resolve(data);
         this.donne = data;
@@ -33,6 +39,18 @@ export class PromService {
         console.log(err);
       });
     });
+    }
+    
+    /** if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
+      return this.getLocalData('etudiants');
+    }else{
+        return this.http.get<Etudiant>('etudiant/findall')
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+    }**/
+    
   }
   getDetail(id) {
     return new Promise(resolve => {
@@ -90,14 +108,23 @@ export class PromService {
   }
   suppression(id) {
     console.log(id);
-    return new Promise(resolve => {
-      this.http.delete('etudiant/suppression/' + id).subscribe(data => {
-        resolve(data);
-        console.log("vita service");
-      }, err => {
-        console.log(err);
-      });
-    });
+    return this.http.delete<Etudiant>('etudiant/suppression/' + id, this.httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+  handleError(error) {
+     let errorMessage = '';
+     if(error.error instanceof ErrorEvent) {
+       // Get client-side error
+       errorMessage = error.error.message;
+     } else {
+       // Get server-side error
+       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+     }
+     window.alert(errorMessage);
+     return throwError(errorMessage);
   }
   public setExtras(data) {
     this.etudiant = data;
@@ -106,11 +133,11 @@ export class PromService {
   public getExtras() {
     return this.etudiant;
   }
-  private setLocalData(key, data) {
+  public setLocalData(key, data) {
     this.storage.set(`${API_STORAGE_KEY}-${key}`, data);
   }
 
-  private getLocalData(key) {
+  public getLocalData(key) {
     return this.storage.get(`${API_STORAGE_KEY}-${key}`);
   }
 }

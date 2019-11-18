@@ -14,12 +14,18 @@ export class ListePage implements OnInit {
     this.getEtudiant();
   }
   getEtudiant() {
-    this.service.getEtudiant()
+     this.service.getEtudiant()
       .then(data => {
         this.resultat = data;
         this.donne = this.resultat.data;
         console.log(this.donne);
       });
+     /** return this.service.getEtudiant().subscribe((data: {}) => {
+        this.service.setLocalData('etudiants', data);
+      this.resultat = data;
+      this.donne = this.resultat.data;
+    })**/
+      
   }
   recherche(nom) {
     this.service.recherche(nom)
@@ -41,10 +47,8 @@ export class ListePage implements OnInit {
     this.route.navigate(['tabs/tabs/modification']);
   }
   supprimer(id){
-     this.service.suppression(id)
-      .then(data => {
-        this.resultat = data;
-        this.getEtudiant();
+       this.service.suppression(id).subscribe(data => {
+        this.getEtudiant()
       });
   }
   search(event){
@@ -55,10 +59,7 @@ export class ListePage implements OnInit {
       });
   }
   ngOnInit() {
-    setTimeout( () => {
-      console.log("timeout");
-        this.getEtudiant();
-    }, 1000);
+    
   }
   
 }

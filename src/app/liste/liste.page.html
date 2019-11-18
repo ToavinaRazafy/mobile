@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Etudiants</ion-title>
   </ion-toolbar>
@@ -13,6 +13,10 @@
 
 <ion-content>
   <ion-button (click)="nouveau()" expand="block">Nouveau</ion-button>
+   <ion-refresher slot="fixed" (ionRefresh)="getEtudiant()">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <ion-item *ngFor="let d of donne">
       <ion-avatar slot="start" (click)="getDetail(d)">
